@@ -3,59 +3,59 @@ import { Box, makeStyles, useTheme } from "@material-ui/core"
 import { DataGrid, GridColDef } from "@material-ui/data-grid"
 import Loader from 'react-loader-spinner'
 import { useShipments } from "../data/use-shipments"
+import useDynamicHeightRow from "../hooks/useDynamicHeightRow"
 
 const COLUMNS: GridColDef[] = [
   {
     field: 'houseBillNumber',
     headerName: 'House Bill',
-    width: 150
+    flex: 1
   },
   {
     field: 'client',
     headerName: 'Shipper',
-    width: 200
+    flex: 1
   },
   {
     field: 'origin',
     headerName: 'Origin',
-    width: 400
+    flex: 2
   },
   {
     field: 'destination',
     headerName: 'Destination',
-    width: 400
+    flex: 2
   },
   {
     field: 'mode',
     headerName: 'Mode',
-    width: 200
+    flex: 1
   },
   {
     field: 'estimatedDeparture',
     headerName: 'Estimated Departure',
-    width: 200
+    flex: 1
   },
   {
     field: 'estimatedArrival',
     headerName: 'Estimated Arrival',
-    width: 200
+    flex: 1
   },
   {
     field: 'status',
     headerName: 'Status',
-    width: 200
+    flex: 1
   }
 ]
 
 const useStyles = makeStyles({
   grid: {
     marginInline: 16,
-    height: '100%'
+    height: "calc(100vh - 64px)",
   },
   loader: {
     margin: 'auto',
     width: 'fit-content',
-    marginTop: 200
   }
 })
 
@@ -63,6 +63,7 @@ export const ShipmentsPage: React.FC = () => {
   const classes = useStyles()
   const useShipmentsResult = useShipments()
   const theme = useTheme()
+  const qtyRows = useDynamicHeightRow();
 
   let component: ReactElement
   switch (useShipmentsResult.status) {
@@ -71,7 +72,7 @@ export const ShipmentsPage: React.FC = () => {
         className={classes.grid}
         rows={useShipmentsResult.shipments}
         columns={COLUMNS}
-        pageSize={20}
+        pageSize={qtyRows}
         disableSelectionOnClick
       />
       break;
