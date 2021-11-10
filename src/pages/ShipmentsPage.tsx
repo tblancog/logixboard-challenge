@@ -56,6 +56,7 @@ const useStyles = makeStyles({
   loader: {
     margin: 'auto',
     width: 'fit-content',
+    marginTop: 200
   }
 })
 
